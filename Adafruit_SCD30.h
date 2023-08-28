@@ -102,11 +102,9 @@ public:
 
   void reset(void);
   bool dataReady(void);
-  bool getEvent(sensors_event_t *humidity, sensors_event_t *temp);
 
   bool read(void);
 
-  uint16_t getMeasurementInterval(void);
   bool setMeasurementInterval(uint16_t interval);
 
   bool selfCalibrationEnabled(void);
@@ -116,13 +114,10 @@ public:
   uint16_t getAmbientPressureOffset(void);
 
   bool setAltitudeOffset(uint16_t altitude);
-  uint16_t getAltitudeOffset(void);
 
   bool setTemperatureOffset(uint16_t temp_offset);
-  uint16_t getTemperatureOffset(void);
 
   bool forceRecalibrationWithReference(uint16_t reference);
-  uint16_t getForcedCalibrationReference(void);
 
   Adafruit_Sensor *getTemperatureSensor(void);
   Adafruit_Sensor *getHumiditySensor(void);
@@ -150,8 +145,6 @@ private:
                                         ///< members to Humidity data
                                         ///< object
 
-  void fillHumidityEvent(sensors_event_t *humidity, uint32_t timestamp);
-  void fillTempEvent(sensors_event_t *temp, uint32_t timestamp);
   bool sendCommand(uint16_t command, uint16_t argument);
   bool sendCommand(uint16_t command);
   uint16_t getAmbiendPressure(void);

@@ -142,15 +142,6 @@ bool Adafruit_SCD30::setMeasurementInterval(uint16_t interval) {
 }
 
 /**
- * @brief Read the current amount of time between measurements
- *
- * @return uint16_t The current measurement interval in seconds.
- */
-uint16_t Adafruit_SCD30::getMeasurementInterval(void) {
-  return readRegister(SCD30_CMD_SET_MEASUREMENT_INTERVAL);
-}
-
-/**
  * @brief Gets the enable status of the SCD30's self calibration routine
  *
  * @return true: enabled false: disabled
@@ -199,14 +190,6 @@ uint16_t Adafruit_SCD30::getAmbientPressureOffset(void) {
 bool Adafruit_SCD30::setAltitudeOffset(uint16_t altitude) {
   return sendCommand(SCD30_CMD_SET_ALTITUDE_COMPENSATION, altitude);
 }
-/**
- * @brief Get the current altitude offset
- *
- * @return uint16_t The current altitude offset value in meters above sea level.
- */
-uint16_t Adafruit_SCD30::getAltitudeOffset(void) {
-  return readRegister(SCD30_CMD_SET_ALTITUDE_COMPENSATION);
-}
 
 /**
  * @brief Set a temperature offset
@@ -224,14 +207,6 @@ uint16_t Adafruit_SCD30::getAltitudeOffset(void) {
  */
 bool Adafruit_SCD30::setTemperatureOffset(uint16_t temp_offset) {
   return sendCommand(SCD30_CMD_SET_TEMPERATURE_OFFSET, temp_offset);
-}
-/**
- * @brief Get the current temperature offset in hundreths of a degree C
- *
- * @return uint16_t the current temperature offset
- */
-uint16_t Adafruit_SCD30::getTemperatureOffset(void) {
-  return readRegister(SCD30_CMD_SET_TEMPERATURE_OFFSET);
 }
 
 /**
@@ -254,14 +229,6 @@ bool Adafruit_SCD30::forceRecalibrationWithReference(uint16_t reference) {
   return sendCommand(SCD30_CMD_SET_FORCED_RECALIBRATION_REF, reference);
 }
 
-/**
- * @brief Get the current forced recalibration reference value
- *
- * @return uint16_t The current reference value in ppm
- */
-uint16_t Adafruit_SCD30::getForcedCalibrationReference(void) {
-  return readRegister(SCD30_CMD_SET_FORCED_RECALIBRATION_REF);
-}
 /**
  * @brief  Updates the measurement data for all sensors simultaneously
  *
@@ -367,47 +334,6 @@ Adafruit_Sensor *Adafruit_SCD30::getHumiditySensor(void) {
  */
 Adafruit_Sensor *Adafruit_SCD30::getTemperatureSensor(void) {
   return temp_sensor;
-}
-
-/**************************************************************************/
-/*!
-    @brief  Gets the humidity sensor and temperature values as sensor events
-    @param  humidity Sensor event object that will be populated with humidity
-   data
-    @param  temp Sensor event object that will be populated with temp data
-    @returns True
-*/
-/**************************************************************************/
-bool Adafruit_SCD30::getEvent(sensors_event_t *humidity,
-                              sensors_event_t *temp) {
-  uint32_t t = millis();
-  if (!read()) {
-    return false;
-  }
-
-  // use helpers to fill in the events
-  fillHumidityEvent(humidity, t);
-  fillTempEvent(temp, t);
-  return true;
-}
-
-void Adafruit_SCD30::fillHumidityEvent(sensors_event_t *humidity,
-                                       uint32_t timestamp) {
-  memset(humidity, 0, sizeof(sensors_event_t));
-  humidity->version = sizeof(sensors_event_t);
-  humidity->sensor_id = _sensorid_humidity;
-  humidity->type = SENSOR_TYPE_RELATIVE_HUMIDITY;
-  humidity->timestamp = timestamp;
-  humidity->relative_humidity = relative_humidity;
-}
-
-void Adafruit_SCD30::fillTempEvent(sensors_event_t *temp, uint32_t timestamp) {
-  memset(temp, 0, sizeof(sensors_event_t));
-  temp->version = sizeof(sensors_event_t);
-  temp->sensor_id = _sensorid_temp;
-  temp->type = SENSOR_TYPE_AMBIENT_TEMPERATURE;
-  temp->timestamp = timestamp;
-  temp->temperature = temperature;
 }
 
 /**************************************************************************/
