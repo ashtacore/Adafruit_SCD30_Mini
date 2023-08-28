@@ -319,23 +319,6 @@ uint16_t Adafruit_SCD30::readRegister(uint16_t reg_address) {
   return (uint16_t)(buffer[0] << 8 | (buffer[1] & 0xFF));
 }
 
-/*!
-    @brief  Gets an Adafruit Unified Sensor object for the presure sensor
-   component
-    @return Adafruit_Sensor pointer to humidity sensor
- */
-Adafruit_Sensor *Adafruit_SCD30::getHumiditySensor(void) {
-  return humidity_sensor;
-}
-
-/*!
-    @brief  Gets an Adafruit Unified Sensor object for the temp sensor component
-    @return Adafruit_Sensor pointer to temperature sensor
- */
-Adafruit_Sensor *Adafruit_SCD30::getTemperatureSensor(void) {
-  return temp_sensor;
-}
-
 /**************************************************************************/
 /*!
     @brief  Gets the sensor_t data for the SCD30's humidity
